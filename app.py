@@ -28,17 +28,6 @@ class App:
                 self.personen.append(Persoon(row))
 
 
-def vulOppassers():
-    if dag.addTo(persoon, Dag.OPPAS_0_2_NAAM):
-        dag.groepen[Dag.OVER_NAAM].leden.remove(persoon)
-        return
-    if dag.addTo(persoon, Dag.OPPAS_2_4_NAAM):
-        dag.groepen[Dag.OVER_NAAM].leden.remove(persoon)
-        return
-    if dag.addTo(persoon, Dag.OPPAS_6_NAAM):
-        dag.groepen[Dag.OVER_NAAM].leden.remove(persoon)
-
-
 if __name__ == '__main__':
     app = App()
     app.read_file()
@@ -88,17 +77,23 @@ if __name__ == '__main__':
                 persoon.tag = 'X'
                 continue
             persoon.tag = '0'
-            vulOppassers(dag, persoon)
-
+            if dag.addTo(persoon, Dag.OPPAS_0_2_NAAM):
+                dag.groepen[Dag.OVER_NAAM].leden.remove(persoon)
+                continue
+            if dag.addTo(persoon, Dag.OPPAS_2_4_NAAM):
+                dag.groepen[Dag.OVER_NAAM].leden.remove(persoon)
+                continue
+            if dag.addTo(persoon, Dag.OPPAS_6_NAAM):
+                dag.groepen[Dag.OVER_NAAM].leden.remove(persoon)
 
         # Oppas voor rest
         for persoon in dag.groepen[Dag.OVER_NAAM].leden:
             if dag.addTo(persoon, Dag.OPPAS_0_2_NAAM):
                 dag.groepen[Dag.OVER_NAAM].leden.remove(persoon)
-                # continue
+                continue
             if dag.addTo(persoon, Dag.OPPAS_2_4_NAAM):
                 dag.groepen[Dag.OVER_NAAM].leden.remove(persoon)
-                # continue
+                continue
             if dag.addTo(persoon, Dag.OPPAS_6_NAAM):
                 dag.groepen[Dag.OVER_NAAM].leden.remove(persoon)
 
